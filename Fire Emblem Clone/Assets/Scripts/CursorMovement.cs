@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class CursorMovement : MonoBehaviour
 {
+    public float duration = 0.5f;
+    public float waitTime = 1f;
+
     private Vector3 endPos;
     private Vector3 startPos;
-    public float duration = 0.5f;
-    private float timeElapsed;
+    private float durationElapsed;
+    private float waitTimeElapsed;
     private bool moving = false;
+    private bool hasMoved = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,8 +23,27 @@ public class CursorMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CursorControl();
+    }
+    void CursorControl()
+    {
         if (!moving)
         {
+            // If all buttons are released, completely stop and reset movement.
+            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+            {
+                hasMoved = false;
+                waitTimeElapsed = 0f;
+            }
+
+            // If player has moved once, but the wait time has not been surpassed, increment and force player to wait.
+            if (hasMoved && waitTimeElapsed / waitTime < 1f)
+            {
+                waitTimeElapsed += Time.deltaTime;
+                return;
+            }
+
+            // Controls for moving cursor
             float horizDir = 0f;
             float vertDir = 0f;
             startPos = transform.position;
@@ -45,17 +68,20 @@ public class CursorMovement : MonoBehaviour
                 moving = true;
             }
             endPos = new Vector3(startPos.x + horizDir, startPos.y, startPos.z + vertDir);
+
+
         }
         else
         {
-            timeElapsed += Time.deltaTime;
-            float percentComplete = timeElapsed / duration;
+            durationElapsed += Time.deltaTime;
+            float percentComplete = durationElapsed / duration;
 
             transform.position = Vector3.Lerp(startPos, endPos, percentComplete);
             if (percentComplete >= 1f)
             {
                 moving = false;
-                timeElapsed = 0f;
+                durationElapsed = 0f;
+                hasMoved = true;
             }
         }
     }

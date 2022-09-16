@@ -8449,6 +8449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.1
+  waitTime: 0.65
 --- !u!4 &1678239221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c0eb3c97ea12a2b45b98a971afdef086, type: 3}
