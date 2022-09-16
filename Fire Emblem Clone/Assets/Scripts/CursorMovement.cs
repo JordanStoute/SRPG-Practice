@@ -6,13 +6,13 @@ public class CursorMovement : MonoBehaviour
 {
     public float duration = 0.5f;
     public float waitTime = 1f;
+    public float slowDuration = 1.75f;
 
     private Vector3 endPos;
     private Vector3 startPos;
     private float durationElapsed;
     private float waitTimeElapsed;
     private bool moving = false;
-    private bool hasMoved = false;
 
     // Start is called before the first frame update
     void Start()
@@ -32,15 +32,13 @@ public class CursorMovement : MonoBehaviour
             // If all buttons are released, completely stop and reset movement.
             if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
             {
-                hasMoved = false;
                 waitTimeElapsed = 0f;
             }
 
             // If player has moved once, but the wait time has not been surpassed, increment and force player to wait.
-            if (hasMoved && waitTimeElapsed / waitTime < 1f)
+            if (waitTimeElapsed / waitTime < 1f)
             {
-                waitTimeElapsed += Time.deltaTime;
-                return;
+                
             }
 
             // Controls for moving cursor
@@ -74,14 +72,22 @@ public class CursorMovement : MonoBehaviour
         else
         {
             durationElapsed += Time.deltaTime;
-            float percentComplete = durationElapsed / duration;
+            float percentComplete = 0f;
+            if (waitTimeElapsed / waitTime < 1f)
+            {
+                waitTimeElapsed += Time.deltaTime;
+                percentComplete = durationElapsed / slowDuration;
+            }
+            else
+            {
+                percentComplete = durationElapsed / duration;
+            }
 
             transform.position = Vector3.Lerp(startPos, endPos, percentComplete);
             if (percentComplete >= 1f)
             {
                 moving = false;
                 durationElapsed = 0f;
-                hasMoved = true;
             }
         }
     }
