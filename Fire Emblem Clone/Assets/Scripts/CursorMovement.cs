@@ -24,22 +24,22 @@ public class CursorMovement : MonoBehaviour
             float horizDir = 0f;
             float vertDir = 0f;
             startPos = transform.position;
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKey(KeyCode.D))
             {
                 horizDir = 1f;
                 moving = true;
             }
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if (Input.GetKey(KeyCode.A))
             {
                 horizDir = -1f;
                 moving = true;
             }
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 vertDir = 1f;
                 moving = true;
             }
-            else if (Input.GetKeyDown(KeyCode.S))
+            else if (Input.GetKey(KeyCode.S))
             {
                 vertDir = -1f;
                 moving = true;
