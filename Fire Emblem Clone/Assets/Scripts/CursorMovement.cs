@@ -21,30 +21,30 @@ public class CursorMovement : MonoBehaviour
     {
         if (!moving)
         {
+            float horizDir = 0f;
+            float vertDir = 0f;
+            startPos = transform.position;
             if (Input.GetKeyDown(KeyCode.D))
             {
-                startPos = transform.position;
-                endPos = new Vector3(startPos.x + 1f, startPos.y, startPos.z);
+                horizDir = 1f;
                 moving = true;
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
-                startPos = transform.position;
-                endPos = new Vector3(startPos.x - 1f, startPos.y, startPos.z);
+                horizDir = -1f;
                 moving = true;
             }
-            else if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                startPos = transform.position;
-                endPos = new Vector3(startPos.x, startPos.y, startPos.z + 1f);
+                vertDir = 1f;
                 moving = true;
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
-                startPos = transform.position;
-                endPos = new Vector3(startPos.x, startPos.y, startPos.z - 1f);
+                vertDir = -1f;
                 moving = true;
             }
+            endPos = new Vector3(startPos.x + horizDir, startPos.y, startPos.z + vertDir);
         }
         else
         {
