@@ -2,14 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UnitStats : MonoBehaviour
+public class UnitStats : MonoBehaviour
 {
-    [SerializeField] protected int maxHP;
-    [SerializeField] protected int strength;
-    [SerializeField] protected int defense;
-    [SerializeField] protected int speed;
-    [SerializeField] protected int move;
-    [SerializeField] protected int range;
+    [SerializeField] int maxHP;
+    [SerializeField] int strength;
+    [SerializeField] int defense;
+    [SerializeField] int speed;
+    [SerializeField] int move;
+    [SerializeField] int range;
 
-    public int currentHP;
+    private int currentHP;
+
+    public int CurrentHP
+    {
+        get
+        {
+            return currentHP;
+        }
+        set
+        {
+            currentHP = value;
+        }
+    }
+
+    private void Start()
+    {
+        currentHP = maxHP;
+    }
 }
