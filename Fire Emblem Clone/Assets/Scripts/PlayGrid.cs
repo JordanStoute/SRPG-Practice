@@ -6,15 +6,24 @@ public class PlayGrid : MonoBehaviour
 {
     private int m; // Number of rows
     private int n; // Number of columns
-    private int[,] grid;
+    private Transform[,] grid;
 
     // Start is called before the first frame update
     void Start()
     {
         m = transform.childCount;
         n = transform.GetChild(0).childCount;
-        grid = new int[m, n];
-        Debug.Log("Number of rows: " + m + "\nNumber of columns: " + n);
+        grid = new Transform[m, n];
+
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                grid[i, j] = transform.GetChild(i).GetChild(j);
+            }
+        }
+
+        Debug.Log(grid);
     }
 
     // Update is called once per frame
