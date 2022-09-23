@@ -15,9 +15,8 @@ public class PlayGrid : MonoBehaviour
 
     private int m; // Number of rows
     private int n; // Number of columns
-    private Transform[,] grid;
+    private GridTile[,] gTiles;
     private int[] currentIndex;
-    //private int[] lastIndex;
 
     public int[] CurrentIndex
     {
@@ -30,23 +29,12 @@ public class PlayGrid : MonoBehaviour
             currentIndex = value;
         }
     }
-    /*public int[] LastIndex
-    {
-        get
-        {
-            return lastIndex;
-        }
-        set
-        {
-            lastIndex = value;
-        }
-    }*/
 
-    public Transform[,] Grid
+    public GridTile[,] GTiles
     {
         get
         {
-            return grid;
+            return gTiles;
         }
     }
 
@@ -54,35 +42,34 @@ public class PlayGrid : MonoBehaviour
     {
         SetGrid();
         currentIndex = new int[] { mStart, nStart };
-        //lastIndex = new int[] { mStart, nStart };
         SetMaterial(currentIndex, selectedMaterial);
 
-        cursor.transform.position = new Vector3(grid[mStart, nStart].position.x, grid[mStart, nStart].position.y + gameManager.cursorHeight, grid[mStart, nStart].position.z);
-        mainPlayer.transform.position = new Vector3(grid[mStart, nStart].position.x, grid[mStart, nStart].position.y + gameManager.unitHeight, grid[mStart, nStart].position.z);
+        cursor.transform.position = new Vector3(gTiles[mStart, nStart].GetPosition().x, gTiles[mStart, nStart].GetPosition().y + gameManager.cursorHeight, gTiles[mStart, nStart].GetPosition().z);
+        mainPlayer.transform.position = new Vector3(gTiles[mStart, nStart].GetPosition().x, gTiles[mStart, nStart].GetPosition().y + gameManager.unitHeight, gTiles[mStart, nStart].GetPosition().z);
     }
 
     void SetGrid()
     {
         m = transform.childCount;
         n = transform.GetChild(0).childCount;
-        grid = new Transform[m, n];
+        gTiles = new GridTile[m, n];
 
-        for (int i = 0; i < grid.GetLength(0); i++)
+        for (int i = 0; i < gTiles.GetLength(0); i++)
         {
-            for (int j = 0; j < grid.GetLength(1); j++)
+            for (int j = 0; j < gTiles.GetLength(1); j++)
             {
-                grid[i, j] = transform.GetChild(i).GetChild(j);
+                gTiles[i, j] = transform.GetChild(i).GetChild(j).GetComponent<GridTile>();
             }
         }
     }
 
     public Material GetMaterial(int[] x)
     {
-        return grid[x[0], x[1]].gameObject.GetComponent<Renderer>().material;
+        return gTiles[x[0], x[1]].GetMaterial();
     }
 
     public void SetMaterial(int[] x, Material material)
     {
-        grid[x[0], x[1]].gameObject.GetComponent<Renderer>().material = material;
+        gTiles[x[0], x[1]].SetMaterial(material);
     }
 }

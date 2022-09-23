@@ -9,18 +9,17 @@ public class CursorMovement : MonoBehaviour
     public float waitTime = 1f;
     public float slowDuration = 1.75f;
 
-    private Transform[,] gridArray;
+    private GridTile[,] gridArray;
     private Vector3 endPos;
     private Vector3 startPos;
     private float durationElapsed;
     private float waitTimeElapsed;
     private bool moving = false;
-    private bool firstMove = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        gridArray = playGrid.Grid;
+        gridArray = playGrid.GTiles;
     }
 
     // Update is called once per frame
